@@ -2,9 +2,9 @@
   "name": "translater",
   "version": "0.0.1",
   "description": "A CLI written in Node / JavaScript / TypeScript that translates data from CSV with Deepl API",
-  "main": "index.js",
+  "main": "src/index.js",
   "scripts": {
-    "start": "node index",
+    "start": "node src/index",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
