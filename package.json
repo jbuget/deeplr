@@ -4,7 +4,7 @@
   "description": "A CLI written in Node / JavaScript / TypeScript that translates data from CSV with Deepl API",
   "main": "src/index.js",
   "scripts": {
-    "start": "node src/index -i ./data/input/dataset_02.xlsx -o ./data/output/result_dataset_02.xlsx -s FR -t EN-GB",
+    "start": "node src/index -i ./data/input/dataset_01.xlsx -o ./data/output/result_dataset_01.xlsx -s FR -t EN-GB",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {

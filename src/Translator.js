@@ -8,6 +8,28 @@ export default class Translator {
   }
 
   async translateMultipleLangs(products, sourceLang, targetLangs) {
+
+    function sleep(ms) {
+      return new Promise((resolve) => {
+        setTimeout(resolve, ms);
+      });
+    }
+
+    return targetLangs.reduce(async (results, targetLang) => {
+      console.log(`Translating: ${targetLang}`);
+
+      const translatedProducts = await this.translateSingleLang(products, sourceLang, targetLang);
+      results.push({
+        lang: targetLang,
+        products: translatedProducts
+      });
+
+      await sleep(1000);
+
+      return results;
+    }, []);
+
+
     return await Promise.all(targetLangs.map(async (targetLang) => {
       console.log(`Translating: ${targetLang}`);
       const translatedProducts = await this.translateSingleLang(products, sourceLang, targetLang);
