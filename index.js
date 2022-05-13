@@ -1,10 +1,10 @@
 import 'dotenv/config'
-import * as deepl from 'deepl-node';
+import Translator from "./Translator.js";
 
-const authKey = process.env.DEEPL_API_KEY; // Replace with your key
-const translator = new deepl.Translator(authKey);
+async function main() {
+  const translator = new Translator();
+  const translation = await translator.translate();
+  console.log(translation.text);
+}
 
-(async () => {
-  const result = await translator.translateText('Hello, world!', null, 'fr');
-  console.log(result.text); // Bonjour, le monde !
-})();
+main();

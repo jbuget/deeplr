@@ -1,0 +1,29 @@
+{
+  "name": "translater",
+  "version": "0.0.1",
+  "description": "A CLI written in Node / JavaScript / TypeScript that translates data from CSV with Deepl API",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jbuget/translater.git"
+  },
+  "keywords": [
+    "translation",
+    "Deepl"
+  ],
+  "author": "Jérémy Buget <contact@jbuget.fr>",
+  "license": "AGPL-3.0",
+  "bugs": {
+    "url": "https://github.com/jbuget/translater/issues"
+  },
+  "homepage": "https://github.com/jbuget/translater#readme",
+  "dependencies": {
+    "deepl-node": "^1.2.2",
+    "dotenv": "^16.0.1"
+  },
+  "type": "module"
+}
