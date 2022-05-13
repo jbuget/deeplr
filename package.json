@@ -4,7 +4,7 @@
   "description": "A CLI written in Node / JavaScript / TypeScript that translates data from CSV with Deepl API",
   "main": "src/index.js",
   "scripts": {
-    "start": "node src/index",
+    "start": "node src/index -i ./data/input/dataset_02.xlsx -o ./data/output/dataset_02.xlsx -l DE,EN,ES,FR,IT",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -23,7 +23,8 @@
   "homepage": "https://github.com/jbuget/translater#readme",
   "dependencies": {
     "deepl-node": "^1.2.2",
-    "dotenv": "^16.0.1"
+    "dotenv": "^16.0.1",
+    "xlsx": "file:vendor/xlsx-0.18.7.tgz"
   },
   "type": "module"
 }
