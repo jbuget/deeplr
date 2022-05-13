@@ -2,10 +2,30 @@ import 'dotenv/config'
 import * as XLSX from 'xlsx/xlsx.mjs';
 import * as fs from 'fs';
 import Translator from './Translator.js';
+import { Command } from 'commander';
+
+const program = new Command();
+
+program
+  .name('deeplr')
+  .description('CLI to translate files with Deepl API')
+  .version('0.0.1');
+
+program
+  .option('-i, --input_file <string>')
+  .option('-o, --output_file <string>')
+  .option('-s, --source_lang <string>')
+  .option('-t, --target_lang <string>')
+
+program.parse();
+
+const options = program.opts();
+
+console.table(options);
 
 async function main() {
   // Input
-  const buf = fs.readFileSync('./data/dataset_02.xlsx');
+  const buf = fs.readFileSync(options.input_file);
   const inputWorkbook = XLSX.read(buf);
   const inputWorksheet = inputWorkbook.Sheets["Products"];
 
@@ -21,10 +41,7 @@ async function main() {
     ["A2", "B2", "C2"],
     ["A3", "B3", "C3"]
   ]);
-  const data = XLSX.writeFile(outputWorkbook, './data/output.xlsx');
-
+  const data = XLSX.writeFile(outputWorkbook, options.output_file);
 }
-
-const args = process.argv.slice(2)
 
 main();
