@@ -1,5 +1,4 @@
 import * as deepl from 'deepl-node';
-import Translation from "./Translation.js";
 
 export default class Translator {
 
@@ -8,12 +7,42 @@ export default class Translator {
     this._translator = new deepl.Translator(authKey);
   }
 
-  async translate() {
-    const result = await this._translator.translateText('Hello, world!', null, 'fr');
-
-    const translation = new Translation(result);
-
-    return translation;
+  async translateMultipleLangs(products, sourceLang, targetLangs) {
+    return await Promise.all(targetLangs.map(async (targetLang) => {
+      console.log(`Translating: ${targetLang}`);
+      const translatedProducts = await this.translateSingleLang(products, sourceLang, targetLang);
+      return {
+        lang: targetLang,
+        products: translatedProducts
+      };
+    }))
   }
 
+  async translateSingleLang(products, sourceLang, targetLang) {
+    const translatedProducts = await Promise.all(products.map(async (product) => {
+      const translatedProduct = Object.assign({}, product);
+
+      if (product['Title'] && product['Title'].length > 0) {
+        translatedProduct['Title'] = (await this.translateText(product['Title'], sourceLang, targetLang, { preserveFormatting: true })).text;
+      } else {
+        translatedProduct['Title'] = 'ERROR! Field "Title" is empty or null'
+      }
+      if (product['Body HTML'] && product['Body HTML'].length > 0) {
+        translatedProduct['Body HTML'] = (await this.translateText(product['Body HTML'], sourceLang, targetLang, { preserveFormatting: true, tagHandling: 'html' })).text;
+      } else {
+        translatedProduct['Body HTML'] = 'ERROR! Field "Body HTML" is empty or null';
+      }
+      return translatedProduct;
+    }));
+    return translatedProducts;
+  }
+
+  async translateText(text, sourceLang, targetLang, options) {
+    try {
+      return this._translator.translateText(text, sourceLang, targetLang, options);
+    } catch (error) {
+      console.error(error);
+      return 'ERROR!'
+    }
+  }
 }

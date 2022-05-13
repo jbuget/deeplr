@@ -25,23 +25,29 @@ console.table(options);
 
 async function main() {
   // Input
-  const buf = fs.readFileSync(options.input_file);
-  const inputWorkbook = XLSX.read(buf);
+  const iBuf = fs.readFileSync(options.input_file);
+  const inputWorkbook = XLSX.read(iBuf);
   const inputWorksheet = inputWorkbook.Sheets["Products"];
+  const products = XLSX.utils.sheet_to_json(inputWorksheet);
 
   // Processing
+  const sourceLang = options.source_lang;
+  const targetLangs = options.target_lang.split(',');
   const translator = new Translator();
-  const translation = await translator.translate();
+  const translatedProductsByTargetLang = await translator.translateMultipleLangs(products, sourceLang, targetLangs);
 
   // Output
-  console.log(translation.text);
-  const outputWorkbook = XLSX.utils.book_new();
-  const outputWorksheet = XLSX.utils.aoa_to_sheet([
-    ["A1", "B1", "C1"],
-    ["A2", "B2", "C2"],
-    ["A3", "B3", "C3"]
-  ]);
-  const data = XLSX.writeFile(outputWorkbook, options.output_file);
+  const workbook = XLSX.utils.book_new();
+  // Add original products
+  XLSX.utils.book_append_sheet(workbook, inputWorksheet, `Products`);
+  // Add translated products
+  translatedProductsByTargetLang.forEach(translation => {
+    const worksheet = XLSX.utils.json_to_sheet(translation.products);
+    XLSX.utils.book_append_sheet(workbook, worksheet, `Products_${translation.lang}`);
+  });
+  console.log('File generated successfully ✅');
+  const oBuf = XLSX.write(workbook, {type: "buffer", bookType: "xlsx"});
+  fs.writeFileSync(options.output_file, oBuf);
 }
 
 main();
