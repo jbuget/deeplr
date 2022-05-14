@@ -1,17 +1,31 @@
 # Deeplr
 
-## ⚠️ Warning!
-
-This project is a work in progress!
+A CLI written in JavaScript/Node.js that translates data from XLSX to XLSX files with Deepl API.
 
 ## Usage
+
+### With npmjs/npx
+
+```shell
+$ npx deeplr \
+      --key xxx-yyy-zzz \
+      --input input.xlsx \ 
+      --output output.xlsx \
+      --source_lang FR \
+      --target_langs DE,EN,ES,FR,IT
+
+# or with shortcuts
+$ npx deeplr -k xxx-yyy-zzz -i input.xlsx -o .output.xlsx -s FR -t DE,EN,ES,FR,IT
+```
+
+### From source code
 
 **1.** Copy the `sample.env` file to `.env` file and fill in your Deepl API key.
 
 **2.** Execute the program:
 
 ```shell
-$ node src/index -i input_file.xlsx -o ouput_file.xlsx -s FR -t EN-GB,IT
+$ node src/index -i input_file.xlsx -o output_file.xlsx -s FR -t EN-GB,IT
 ```
 
 ## Benchmark
@@ -35,12 +49,6 @@ $ node src/index -i input_file.xlsx -o ouput_file.xlsx -s FR -t EN-GB,IT
 
 
 ## Roadmap : 
-
-- Packaging as an official npm binary / dependency 
-
-```shell
-$ npx deeplr -i input.xlsx -o .output.xlsx -s FR -t DE,EN,ES,FR,IT
-```
 
 - Improve arguments defaults/error handling
 - Add Typescript support

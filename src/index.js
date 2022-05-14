@@ -15,7 +15,7 @@ program
   .option('-i, --input_file <string>')
   .option('-o, --output_file <string>')
   .option('-s, --source_lang <string>')
-  .option('-t, --target_lang <string>')
+  .option('-t, --target_langs <string>')
 
 program.parse();
 
@@ -37,7 +37,7 @@ async function main() {
   // Processing
   console.time('processing');
   const sourceLang = options.source_lang;
-  const targetLangs = options.target_lang.split(',');
+  const targetLangs = options.target_langs.split(',');
   const translator = new Translator();
   const translatedProductsByTargetLang = await translator.translateMultipleLangs(products, sourceLang, targetLangs);
   console.timeEnd('processing');
