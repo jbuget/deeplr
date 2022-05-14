@@ -1,6 +1,6 @@
 {
   "name": "deeplr",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "A CLI written in Node / JavaScript / TypeScript that translates data from CSV with Deepl API",
   "main": "src/index.js",
   "scripts": {
