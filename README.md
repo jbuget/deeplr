@@ -4,7 +4,7 @@ A CLI written in JavaScript/Node.js that translates data from XLSX to XLSX files
 
 ## Usage
 
-### With npmjs/npx
+### As a binary (with npx/npmjs)
 
 ```shell
 $ npx deeplr \
@@ -18,7 +18,7 @@ $ npx deeplr \
 $ npx deeplr -k xxx-yyy-zzz -i input.xlsx -o .output.xlsx -s FR -t DE,EN,ES,FR,IT
 ```
 
-### From source code
+### Programmatically
 
 **1.** Copy the `sample.env` file to `.env` file and fill in your Deepl API key.
 
@@ -27,6 +27,10 @@ $ npx deeplr -k xxx-yyy-zzz -i input.xlsx -o .output.xlsx -s FR -t DE,EN,ES,FR,I
 ```shell
 $ node src/index -i input_file.xlsx -o output_file.xlsx -s FR -t EN-GB,IT
 ```
+
+### Supported languages
+
+See https://www.deepl.com/docs-api/other-functions/listing-supported-languages/
 
 ## Benchmark
 
@@ -50,11 +54,9 @@ $ node src/index -i input_file.xlsx -o output_file.xlsx -s FR -t EN-GB,IT
 
 ## Roadmap : 
 
-- Improve arguments defaults/error handling
 - Add Typescript support
 - Add tests
 - Add linting
 - Add CI/CD
 - Support other input/output formats
-- Add execution metrics
 - Build better reports

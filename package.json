@@ -1,7 +1,7 @@
 {
   "name": "deeplr",
   "version": "0.2.0",
-  "description": "A CLI written in Node / JavaScript / TypeScript that translates data from CSV with Deepl API",
+  "description": "A CLI written in JavaScript/Node.js that translates data from XLSX to XLSX files with Deepl API.",
   "main": "src/index.js",
   "scripts": {
     "start": "node src/index -i ./data/input/dataset_03.xlsx -o ./data/output/result_dataset_03.xlsx -s FR -t IT",

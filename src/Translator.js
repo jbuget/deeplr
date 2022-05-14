@@ -2,9 +2,8 @@ import * as deepl from 'deepl-node';
 
 export default class Translator {
 
-  constructor() {
-    const authKey = process.env.DEEPL_API_KEY;
-    this._translator = new deepl.Translator(authKey);
+  constructor(deeplApiKey) {
+    this._translator = new deepl.Translator(deeplApiKey);
     this._count = 0;
   }
 

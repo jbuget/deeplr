@@ -8,20 +8,40 @@ const program = new Command();
 
 program
   .name('deeplr')
-  .description('CLI to translate files with Deepl API')
-  .version('0.0.1');
+  .description('A CLI written in JavaScript/Node.js that translates data from XLSX to XLSX files with Deepl API.')
+  .version('0.2.0');
 
 program
-  .option('-i, --input_file <string>')
-  .option('-o, --output_file <string>')
-  .option('-s, --source_lang <string>')
-  .option('-t, --target_langs <string>')
+  .option('-k, --key <string>', 'Deepl API key')
+  .requiredOption('-i, --input_file <file_path.xlsx>', 'input XLSX file to translate')
+  .requiredOption('-o, --output_file <file_path.xlsx>', 'output XLSX file with translations (one tab by trans. lang.)')
+  .requiredOption('-s, --source_lang <FR>', 'source language')
+  .requiredOption('-t, --target_langs <DE,EN-GB,IT>', 'list of target languages, separated by a comma')
 
 program.parse();
 
 const options = program.opts();
 
 console.table(options);
+
+/* ----------- */
+
+function isUndefinedOrBlank(str) {
+  return (!str || /^\s*$/.test(deeplApiKey));
+}
+
+// Get Deepl API key (required for translation)
+const deeplApiKey = options.key || process.env.DEEPL_API_KEY;
+if (isUndefinedOrBlank(deeplApiKey)) {
+  throw new Error('Missing Deepl API key');
+}
+
+// Check input file path
+if (fs.existsSync(options.input_file)) {
+  throw new Error('Wrong input file path');
+}
+
+/* ----------- */
 
 async function main() {
   console.time('process');
@@ -38,7 +58,7 @@ async function main() {
   console.time('processing');
   const sourceLang = options.source_lang;
   const targetLangs = options.target_langs.split(',');
-  const translator = new Translator();
+  const translator = new Translator(deeplApiKey);
   const translatedProductsByTargetLang = await translator.translateMultipleLangs(products, sourceLang, targetLangs);
   console.timeEnd('processing');
 
