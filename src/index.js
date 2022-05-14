@@ -6,12 +6,14 @@ import * as fs from 'fs';
 import Translator from './Translator.js';
 import { Command } from 'commander';
 
+const VERSION = '0.7.0';
+
 const program = new Command();
 
 program
   .name('deeplr')
   .description('A CLI written in JavaScript/Node.js that translates data from XLSX to XLSX files with Deepl API.')
-  .version('0.6.1');
+  .version(VERSION);
 
 program
   .option('-k, --key <string>', 'Deepl API key')

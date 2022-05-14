@@ -2,9 +2,21 @@
 
 A CLI written in JavaScript/Node.js that translates data from XLSX to XLSX files with Deepl API.
 
+## Use case
+
+Imagine you manage an e-commerce on Shopify, for french market (`FR`), with tens, hundreds or more products (with their variants) and you intend to open up your business internationally (England, Germany, Spain and Italy).
+
+Instead of losing hours with manual translation, you can use the [Deepl API](https://www.deepl.com/fr/docs-api/) to operate it automatically.
+
+In order to that, you can: 
+1. extract your product database as XLSX file (for example with [Matrixify](https://apps.shopify.com/excel-export-import)), 
+2. execute `deeplr` program with target languages (`EN-GB`, `DE`, `ES`, `IT`) (it may take few up to 20 minutes)
+3. re-import data with Matrixify
+4. enjoy 🚀
+
 ## Usage
 
-### As a binary (with npx/npmjs)
+> ⚠️ **For the moment (v0.7.0), the program only works on a worksheet named "Products"**.
 
 ```shell
 $ npx deeplr \
@@ -16,17 +28,13 @@ $ npx deeplr \
       --fields 'Title,Body HTML'
 
 # or with shortcuts
-$ npx deeplr -k xxx-yyy-zzz -i input.xlsx -o .output.xlsx -s FR -t DE,EN,ES,FR,IT -f 'Title,Body HTML'
-```
-
-### Programmatically
-
-**1.** Copy the `sample.env` file to `.env` file and fill in your Deepl API key.
-
-**2.** Execute the program:
-
-```shell
-$ node src/index -i input_file.xlsx -o output_file.xlsx -s FR -t EN-GB,IT
+$ npx deeplr \
+      -k xxx-yyy-zzz \ 
+      -i input.xlsx \ 
+      -o output.xlsx \ 
+      -s FR \
+      -t DE,EN,ES,FR,IT \ 
+      -f 'Title,Body HTML'
 ```
 
 ### Supported languages
@@ -39,7 +47,7 @@ If a field name to translate includes (case insensitive) "HTML" or "XML", then t
 
 See https://github.com/DeepLcom/deepl-node#text-translation-options
 
-> ⚠️ The option is marked as "Beta" by Deepl.
+> ℹ️ ️For the moment, the option is marked as "Beta" by Deepl.
 
 ## Benchmark
 
@@ -61,7 +69,7 @@ See https://github.com/DeepLcom/deepl-node#text-translation-options
 | 47       | 3         | 13.316s |
 
 
-## Roadmap : 
+## Possible improvements:
 
 - Add Typescript support
 - Add tests
