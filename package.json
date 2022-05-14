@@ -25,7 +25,7 @@
     "commander": "^9.2.0",
     "deepl-node": "^1.2.2",
     "dotenv": "^16.0.1",
-    "xlsx": "file:vendor/xlsx-0.18.7.tgz"
+    "xlsx": "^0.18.5"
   },
   "type": "module"
 }
