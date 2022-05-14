@@ -1,4 +1,4 @@
-  import 'dotenv/config'
+import 'dotenv/config';
 import * as XLSX from 'xlsx/xlsx.mjs';
 import * as fs from 'fs';
 import Translator from './Translator.js';
@@ -16,7 +16,8 @@ program
   .requiredOption('-i, --input_file <file_path.xlsx>', 'input XLSX file to translate')
   .requiredOption('-o, --output_file <file_path.xlsx>', 'output XLSX file with translations (one tab by trans. lang.)')
   .requiredOption('-s, --source_lang <FR>', 'source language')
-  .requiredOption('-t, --target_langs <DE,EN-GB,IT>', 'list of target languages, separated by a comma')
+  .requiredOption('-t, --target_langs <DE,EN-GB,IT>', 'list of target languages, separated with a comma')
+  .option('-f, --fields <Title,Body HTML>', 'list of fields to be translated, separated with a comma');
 
 program.parse();
 
@@ -37,8 +38,12 @@ if (isUndefinedOrBlank(deeplApiKey)) {
 }
 
 // Check input file path
-if (fs.existsSync(options.input_file)) {
+if (!fs.existsSync(options.input_file)) {
   throw new Error('Wrong input file path');
+}
+
+if (isUndefinedOrBlank(options.fields)) {
+  options.fields = 'Title,Body HTML';
 }
 
 /* ----------- */
@@ -58,8 +63,9 @@ async function main() {
   console.time('processing');
   const sourceLang = options.source_lang;
   const targetLangs = options.target_langs.split(',');
+  const fields = options.fields.split(',');
   const translator = new Translator(deeplApiKey);
-  const translatedProductsByTargetLang = await translator.translateMultipleLangs(products, sourceLang, targetLangs);
+  const translatedProductsByTargetLang = await translator.translateMultipleLangs(products, sourceLang, targetLangs, fields);
   console.timeEnd('processing');
 
   // Output
@@ -73,7 +79,7 @@ async function main() {
     XLSX.utils.book_append_sheet(workbook, worksheet, `Products_${translation.lang}`);
   });
   console.log('File generated successfully ✅');
-  const oBuf = XLSX.write(workbook, {type: "buffer", bookType: "xlsx"});
+  const oBuf = XLSX.write(workbook, { type: "buffer", bookType: "xlsx" });
   fs.writeFileSync(options.output_file, oBuf);
   console.timeEnd('output');
 

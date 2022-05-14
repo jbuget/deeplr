@@ -4,7 +4,7 @@
   "description": "A CLI written in JavaScript/Node.js that translates data from XLSX to XLSX files with Deepl API.",
   "main": "src/index.js",
   "scripts": {
-    "start": "node src/index -i ./data/input/dataset_03.xlsx -o ./data/output/result_dataset_03.xlsx -s FR -t IT",
+    "start": "node src/index -i ./data/input/dataset_03.xlsx -o ./data/output/result_dataset_03.xlsx -s FR -t IT -f 'Title,Body HTML'",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {

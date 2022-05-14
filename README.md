@@ -12,10 +12,11 @@ $ npx deeplr \
       --input input.xlsx \ 
       --output output.xlsx \
       --source_lang FR \
-      --target_langs DE,EN,ES,FR,IT
+      --target_langs DE,EN,ES,FR,IT \
+      --fields 'Title,Body HTML'
 
 # or with shortcuts
-$ npx deeplr -k xxx-yyy-zzz -i input.xlsx -o .output.xlsx -s FR -t DE,EN,ES,FR,IT
+$ npx deeplr -k xxx-yyy-zzz -i input.xlsx -o .output.xlsx -s FR -t DE,EN,ES,FR,IT -f 'Title,Body HTML'
 ```
 
 ### Programmatically
@@ -31,6 +32,14 @@ $ node src/index -i input_file.xlsx -o output_file.xlsx -s FR -t EN-GB,IT
 ### Supported languages
 
 See https://www.deepl.com/docs-api/other-functions/listing-supported-languages/
+
+### XML and HTML support
+
+If a field name to translate includes (case insensitive) "HTML" or "XML", then the Deepl option `tagHandling` with corresponding value (`html` or `xml`) will be set and used.
+
+See https://github.com/DeepLcom/deepl-node#text-translation-options
+
+> ⚠️ The option is marked as "Beta" by Deepl.
 
 ## Benchmark
 

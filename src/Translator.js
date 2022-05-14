@@ -7,9 +7,9 @@ export default class Translator {
     this._count = 0;
   }
 
-  async translateMultipleLangs(products, sourceLang, targetLangs) {
+  async translateMultipleLangs(products, sourceLang, targetLangs, fields) {
     return Promise.all(targetLangs.map(async (targetLang) => {
-      const translatedProducts = await this.translateSingleLang(products, sourceLang, targetLang);
+      const translatedProducts = await this.translateSingleLang(products, sourceLang, targetLang, fields);
       return {
         lang: targetLang,
         products: translatedProducts
@@ -17,28 +17,31 @@ export default class Translator {
     }));
   }
 
-  async translateSingleLang(products, sourceLang, targetLang) {
+  async translateSingleLang(products, sourceLang, targetLang, fields) {
     const translatedProducts = [];
     for (const product of products) {
       const translatedProduct = Object.assign({}, product);
 
       const requests = {};
-
-      if (product['Title'] && product['Title'].length > 0) {
-        requests['Title'] = this.translateText(product['Title'], sourceLang, targetLang, { preserveFormatting: true });
+      for (const field of fields) {
+        if (product[field] && product[field].length > 0) {
+          let tagHandling = null;
+          if (field.toUpperCase().includes('HTML')) {
+            tagHandling = 'html'
+          }
+          if (field.toUpperCase().includes('XML')) {
+            tagHandling = 'xml'
+          }
+          requests[field] = new Promise(async (resolve, reject) => {
+            translatedProduct[field] = await this.translateText(product[field], sourceLang, targetLang, {
+              preserveFormatting: true,
+              tagHandling
+            });
+            resolve(translatedProduct[field]);
+          });
+        }
       }
-      if (product['Body HTML'] && product['Body HTML'].length > 0) {
-        requests['Body HTML'] = this.translateText(product['Body HTML'], sourceLang, targetLang, {
-          preserveFormatting: true,
-          tagHandling: 'html'
-        });
-      }
-
-      const responses = await Promise.all(Object.values(requests));
-
-      for (const [key, value] of Object.entries(responses)) {
-        translatedProduct[key] = value;
-      }
+      await Promise.all(Object.values(requests));
 
       translatedProducts.push(translatedProduct);
     }
