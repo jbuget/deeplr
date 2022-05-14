@@ -1,4 +1,4 @@
-import 'dotenv/config'
+  import 'dotenv/config'
 import * as XLSX from 'xlsx/xlsx.mjs';
 import * as fs from 'fs';
 import Translator from './Translator.js';
@@ -9,7 +9,7 @@ const program = new Command();
 program
   .name('deeplr')
   .description('A CLI written in JavaScript/Node.js that translates data from XLSX to XLSX files with Deepl API.')
-  .version('0.2.0');
+  .version('0.3.0');
 
 program
   .option('-k, --key <string>', 'Deepl API key')
