@@ -1,6 +1,6 @@
 {
   "name": "deeplr",
-  "version": "0.6.0",
+  "version": "0.6.1",
   "description": "A CLI written in JavaScript/Node.js that translates data from XLSX to XLSX files with Deepl API.",
   "main": "src/index.js",
   "bin": {
