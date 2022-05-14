@@ -24,19 +24,26 @@ const options = program.opts();
 console.table(options);
 
 async function main() {
+  console.time('process');
+
   // Input
+  console.time('input');
   const iBuf = fs.readFileSync(options.input_file);
   const inputWorkbook = XLSX.read(iBuf);
   const inputWorksheet = inputWorkbook.Sheets["Products"];
   const products = XLSX.utils.sheet_to_json(inputWorksheet);
+  console.timeEnd('input');
 
   // Processing
+  console.time('processing');
   const sourceLang = options.source_lang;
   const targetLangs = options.target_lang.split(',');
   const translator = new Translator();
   const translatedProductsByTargetLang = await translator.translateMultipleLangs(products, sourceLang, targetLangs);
+  console.timeEnd('processing');
 
   // Output
+  console.time('output');
   const workbook = XLSX.utils.book_new();
   // Add original products
   XLSX.utils.book_append_sheet(workbook, inputWorksheet, `Products`);
@@ -48,6 +55,9 @@ async function main() {
   console.log('File generated successfully ✅');
   const oBuf = XLSX.write(workbook, {type: "buffer", bookType: "xlsx"});
   fs.writeFileSync(options.output_file, oBuf);
+  console.timeEnd('output');
+
+  console.timeEnd('process');
 }
 
 main();

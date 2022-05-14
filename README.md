@@ -14,6 +14,26 @@ This project is a work in progress!
 $ node src/index -i input_file.xlsx -o ouput_file.xlsx -s FR -t EN-GB,IT
 ```
 
+## Benchmark
+
+> **Equipment:**
+> - MacBook Pro (15 pouces, 2016)
+> - MacOS Monterey 12.3.1
+> - 2,7 GHz Intel Core i7 quatre cœurs
+> - 16 Go 2133 MHz LPDDR3
+> 
+> **Network:**
+> - ping: 18ms
+> - descendant: 488.42Mbps
+> - ascendant: 486.30Mbps
+
+| Products | Languages | Time    |
+|----------|-----------|---------|
+| 47       | 1         | 11.250s |
+| 47       | 2         | 12.193s |
+| 47       | 3         | 13.316s |
+
+
 ## Roadmap : 
 
 - Packaging as an official npm binary / dependency 
