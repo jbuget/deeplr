@@ -9,7 +9,7 @@ const program = new Command();
 program
   .name('deeplr')
   .description('A CLI written in JavaScript/Node.js that translates data from XLSX to XLSX files with Deepl API.')
-  .version('0.3.0');
+  .version('0.4.0');
 
 program
   .option('-k, --key <string>', 'Deepl API key')
