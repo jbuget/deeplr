@@ -21,7 +21,8 @@ program
   .requiredOption('-o, --output_file <file_path.xlsx>', 'output XLSX file with translations (one tab by trans. lang.)')
   .requiredOption('-s, --source_lang <FR>', 'source language')
   .requiredOption('-t, --target_langs <DE,EN-GB,IT>', 'list of target languages, separated with a comma')
-  .option('-f, --fields <Title,Body HTML>', 'list of fields to be translated, separated with a comma');
+  .option('-f, --fields <Title,Body HTML>', 'list of fields to be translated, separated with a comma')
+  .option('-w, --worksheet <Products>', 'workbook sheet to translate');
 
 program.parse();
 
@@ -46,6 +47,10 @@ if (!fs.existsSync(options.input_file)) {
   throw new Error('Wrong input file path');
 }
 
+if (isUndefinedOrBlank(options.worksheet)) {
+  options.worksheet = 'Products';
+}
+
 if (isUndefinedOrBlank(options.fields)) {
   options.fields = 'Title,Body HTML';
 }
@@ -59,7 +64,7 @@ async function main() {
   console.time('input');
   const iBuf = fs.readFileSync(options.input_file);
   const inputWorkbook = XLSX.read(iBuf);
-  const inputWorksheet = inputWorkbook.Sheets["Products"];
+  const inputWorksheet = inputWorkbook.Sheets[options.worksheet];
   const products = XLSX.utils.sheet_to_json(inputWorksheet);
   console.timeEnd('input');
 
