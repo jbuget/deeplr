@@ -8,6 +8,8 @@ export default class Translator {
   }
 
   async translateMultipleLangs(products, sourceLang, targetLangs, fields) {
+    this._nbRequests = products.length * targetLangs.length * fields.length;
+
     return Promise.all(targetLangs.map(async (targetLang) => {
       const translatedProducts = await this.translateSingleLang(products, sourceLang, targetLang, fields);
       return {
@@ -50,9 +52,11 @@ export default class Translator {
 
   async translateText(text, sourceLang, targetLang, options) {
     try {
-      console.log(`count = ${this._count}`);
+      const startTime = new Date();
       const result = await this._translator.translateText(text, sourceLang, targetLang, options);
+      const endTime = new Date();
       this._count++;
+      console.log(`translation requests done: ${this._count}/${this._nbRequests} (${endTime.getTime() - startTime.getTime()} ms)`);
       return result.text;
     } catch (error) {
       console.error(error);
