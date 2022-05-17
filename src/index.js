@@ -65,7 +65,7 @@ async function main() {
   const iBuf = fs.readFileSync(options.input_file);
   const inputWorkbook = XLSX.read(iBuf);
   const inputWorksheet = inputWorkbook.Sheets[options.worksheet];
-  const products = XLSX.utils.sheet_to_json(inputWorksheet);
+  const items = XLSX.utils.sheet_to_json(inputWorksheet);
   console.timeEnd('input');
 
   // Processing
@@ -74,18 +74,18 @@ async function main() {
   const targetLangs = options.target_langs.split(',');
   const fields = options.fields.split(',');
   const translator = new Translator(deeplApiKey);
-  const translatedProductsByTargetLang = await translator.translateMultipleLangs(products, sourceLang, targetLangs, fields);
+  const translatedItemsByTargetLang = await translator.translateMultipleLangs(items, sourceLang, targetLangs, fields);
   console.timeEnd('processing');
 
   // Output
   console.time('output');
   const workbook = XLSX.utils.book_new();
-  // Add original products
-  XLSX.utils.book_append_sheet(workbook, inputWorksheet, `Products`);
-  // Add translated products
-  translatedProductsByTargetLang.forEach(translation => {
-    const worksheet = XLSX.utils.json_to_sheet(translation.products);
-    XLSX.utils.book_append_sheet(workbook, worksheet, `Products_${translation.lang}`);
+  // Add original items
+  XLSX.utils.book_append_sheet(workbook, inputWorksheet, options.worksheet);
+  // Add translated items
+  translatedItemsByTargetLang.forEach(translation => {
+    const worksheet = XLSX.utils.json_to_sheet(translation.items);
+    XLSX.utils.book_append_sheet(workbook, worksheet, `${options.worksheet}_${translation.lang}`);
   });
   console.log('File generated successfully ✅');
   const oBuf = XLSX.write(workbook, { type: "buffer", bookType: "xlsx" });
