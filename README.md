@@ -16,8 +16,6 @@ In order to that, you can:
 
 ## Usage
 
-> ⚠️ **For the moment (v0.7.0), the program only works on a worksheet named "Products"**.
-
 ```shell
 $ npx deeplr \
       --key xxx-yyy-zzz \
@@ -25,7 +23,7 @@ $ npx deeplr \
       --output output.xlsx \
       --source_lang FR \
       --target_langs DE,EN,ES,FR,IT \
-      --fields "Title,Body HTML"
+      --fields "Title,Body HTML" \
       --worksheet "Products"
 
 # or with shortcuts
@@ -35,7 +33,7 @@ $ npx deeplr \
       -o output.xlsx \ 
       -s FR \
       -t DE,EN,ES,FR,IT \ 
-      -f "Title,Body HTML"
+      -f "Title,Body HTML" \
       -w "Products"
 ```
 
