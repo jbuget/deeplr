@@ -22,7 +22,7 @@ $ npx deeplr \
       --input input.xlsx \ 
       --output output.xlsx \
       --source_lang FR \
-      --target_langs DE,EN,ES,FR,IT \
+      --target_langs DE,EN-GB,ES,FR,IT \
       --fields "Title,Body HTML" \
       --worksheet "Products"
 
@@ -32,7 +32,7 @@ $ npx deeplr \
       -i input.xlsx \ 
       -o output.xlsx \ 
       -s FR \
-      -t DE,EN,ES,FR,IT \ 
+      -t DE,EN-GB,ES,FR,IT \ 
       -f "Title,Body HTML" \
       -w "Products"
 ```
