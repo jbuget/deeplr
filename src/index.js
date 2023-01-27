@@ -17,10 +17,10 @@ program
 
 program
   .option('-k, --key <string>', 'Deepl API key')
-  .requiredOption('-i, --input_file <file_path.xlsx>', 'input XLSX file to translate')
-  .requiredOption('-o, --output_file <file_path.xlsx>', 'output XLSX file with translations (one tab by trans. lang.)')
-  .requiredOption('-s, --source_lang <FR>', 'source language')
-  .requiredOption('-t, --target_langs <DE,EN-GB,IT>', 'list of target languages, separated with a comma')
+  .requiredOption('-i, --input_file <file_path.xlsx>', 'input XLSX file to translate [required]')
+  .requiredOption('-o, --output_file <file_path.xlsx>', 'output XLSX file with translations (one tab by trans. lang.)  [required]')
+  .requiredOption('-s, --source_lang <FR>', 'source language [required]')
+  .requiredOption('-t, --target_langs <DE,EN-GB,IT>', 'list of target languages, separated with a comma [required]')
   .option('-f, --fields <Title,Body HTML>', 'list of fields to be translated, separated with a comma')
   .option('-w, --worksheet <Products>', 'workbook sheet to translate');
 
