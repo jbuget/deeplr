@@ -6,7 +6,7 @@ import * as fs from 'fs';
 import Translator from './Translator.js';
 import { Command } from 'commander';
 
-const VERSION = '0.8.2';
+const VERSION = '0.9.0';
 
 const program = new Command();
 
