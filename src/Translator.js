@@ -10,7 +10,9 @@ export default class Translator {
   async translateMultipleLangs(items, sourceLang, targetLangs, fields) {
     this._nbRequests = items.length * targetLangs.length * fields.length;
 
-    return Promise.all(targetLangs.map(async (targetLang) => {
+    const sourceAndTargetLangs = [sourceLang, ...targetLangs];
+
+    return Promise.all(sourceAndTargetLangs.map(async (targetLang) => {
       const translatedItems = await this.translateSingleLang(items, sourceLang, targetLang, fields);
       return {
         lang: targetLang,
@@ -35,11 +37,15 @@ export default class Translator {
             tagHandling = 'xml'
           }
           requests[field] = new Promise(async (resolve, reject) => {
-            translatedItem[field] = await this.translateText(item[field], sourceLang, targetLang, {
-              preserveFormatting: true,
-              tagHandling
-            });
-            resolve(translatedItem[field]);
+            if (sourceLang === targetLang) {
+              resolve(item[field]);
+            } else {
+              translatedItem[field] = await this.translateText(item[field], sourceLang, targetLang, {
+                preserveFormatting: true,
+                tagHandling
+              });
+              resolve(translatedItem[field]);
+            }
           });
         }
       }

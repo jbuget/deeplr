@@ -80,10 +80,16 @@ async function main() {
   // Output
   console.time('output');
   const workbook = XLSX.utils.book_new();
-  // Add original items
-  XLSX.utils.book_append_sheet(workbook, inputWorksheet, options.worksheet);
-  // Add translated items
   translatedItemsByTargetLang.forEach(translation => {
+    // Replace too long cell by "error_field_text_too_long"
+    translation.items.forEach((item) => {
+      for (const field of fields) {
+        if (item[field] && item[field].length > 32767) {
+          item[field] = 'error_field_text_too_long';
+        }
+      }
+    });
+
     const worksheet = XLSX.utils.json_to_sheet(translation.items);
     XLSX.utils.book_append_sheet(workbook, worksheet, `${options.worksheet}_${translation.lang}`);
   });
