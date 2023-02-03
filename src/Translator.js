@@ -28,14 +28,16 @@ export default class Translator {
 
       const requests = {};
       for (const field of fields) {
+        // define `tagHandling` mode : none, HTML or XML parser
+        let tagHandling = undefined;
+        if (field.toUpperCase().includes('HTML')) {
+          tagHandling = 'html'
+        }
+        if (field.toUpperCase().includes('XML')) {
+          tagHandling = 'xml'
+        }
+
         if (item[field] && item[field].length > 0) {
-          let tagHandling = null;
-          if (field.toUpperCase().includes('HTML')) {
-            tagHandling = 'html'
-          }
-          if (field.toUpperCase().includes('XML')) {
-            tagHandling = 'xml'
-          }
           requests[field] = new Promise(async (resolve, reject) => {
             if (sourceLang === targetLang) {
               resolve(item[field]);
