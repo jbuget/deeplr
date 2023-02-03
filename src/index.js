@@ -28,6 +28,8 @@ program.parse();
 
 const options = program.opts();
 
+options.startTime = `${new Date()}`;
+
 console.table(options);
 
 /* ----------- */

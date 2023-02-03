@@ -22,6 +22,8 @@ export default class Translator {
   }
 
   async translateSingleLang(items, sourceLang, targetLang, fields) {
+    console.log(`Start translation from ${sourceLang} to ${targetLang}…`)
+
     const translatedItems = [];
     for (const item of items) {
       const translatedItem = Object.assign({}, item);
@@ -55,6 +57,9 @@ export default class Translator {
 
       translatedItems.push(translatedItem);
     }
+
+    console.log(`End translation from ${sourceLang} to ${targetLang}`);
+
     return translatedItems;
   }
 
