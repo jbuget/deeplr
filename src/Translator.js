@@ -44,10 +44,9 @@ export default class Translator {
             if (sourceLang === targetLang) {
               resolve(item[field]);
             } else {
-              translatedItem[field] = await this.translateText(item[field], sourceLang, targetLang, {
-                preserveFormatting: true,
-                tagHandling
-              });
+              const translationOptions = { preserveFormatting: true };
+              if (tagHandling) translationOptions.tagHandling = tagHandling;
+              translatedItem[field] = await this.translateText(item[field], sourceLang, targetLang, translationOptions);
               resolve(translatedItem[field]);
             }
           });
